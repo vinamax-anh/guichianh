@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dành cho chị Ánh ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ff9ecf,#ffd6e7);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.box{
+    width:90%;
+    max-width:700px;
+    min-height:360px;
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    position:relative;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+h2{
+    color:#ff2d75;
+    margin-bottom:50px;
+    line-height:1.5;
+}
+
+button{
+    padding:14px 24px;
+    font-size:18px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    margin:10px;
+    transition:.3s;
+}
+
+.correct{
+    background:#ff2d75;
+    color:#fff;
+}
+
+.wrong{
+    position:absolute;
+    background:#666;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2 id="question"></h2>
+
+<div id="buttons"></div>
+
+</div>
+
+<script>
+
+const questions=[
+
+{
+question:"Chị Ánh có đồng ý trả lời câu hỏi tiếp theo của em không?",
+correct:["Đồng ý trả lời câu hỏi tiếp theo của em"],
+wrong:"Không đồng ý"
+},
+
+{
+question:"Sau thời gian nói chuyện của hai chị em mình chị có thấy thích em không?",
+correct:["Có"],
+wrong:"Không"
+},
+
+{
+question:"Gu bạn trai của chị là gì?",
+correct:["Em và không ai khác ngoài em"],
+wrong:"Người khác"
+},
+
+{
+question:"Chị có đồng ý tìm hiểu và hẹn hò với em không?",
+correct:["Chị chờ em nói câu này lâu lắm rồi"],
+wrong:"Không đồng ý"
+},
+
+{
+question:"Chị giờ muốn xưng hô với em như nào?",
+correct:["Anh - Em","Chị - Em"],
+wrong:"Bạn bè thôi"
+}
+
+];
+
+let current=0;
+let timer=null;
+
+const question=document.getElementById("question");
+const buttons=document.getElementById("buttons");
+
+function move(btn){
+
+const box=document.querySelector(".box");
+
+const maxX=box.clientWidth-220;
+const maxY=box.clientHeight-70;
+
+btn.style.left=Math.random()*maxX+"px";
+btn.style.top=(120+Math.random()*(maxY-100))+"px";
+
+}
+
+function loadQuestion(){
+
+if(timer) clearInterval(timer);
+
+buttons.innerHTML="";
+
+question.innerHTML=questions[current].question;
+
+questions[current].correct.forEach(text=>{
+
+let btn=document.createElement("button");
+
+btn.className="correct";
+
+btn.innerHTML=text;
+
+btn.onclick=nextQuestion;
+
+buttons.appendChild(btn);
+
+});
+
+let wrong=document.createElement("button");
+
+wrong.className="wrong";
+
+wrong.innerHTML=questions[current].wrong;
+
+buttons.appendChild(wrong);
+
+move(wrong);
+
+// Chạy liên tục
+timer=setInterval(()=>{
+move(wrong);
+},250);
+
+// Né ngay khi chuột tới gần
+wrong.addEventListener("mouseenter",()=>{
+move(wrong);
+});
+
+}
+
+function nextQuestion(){
+
+current++;
+
+if(current<questions.length){
+
+loadQuestion();
+
+}else{
+
+document.querySelector(".box").innerHTML=`
+
+<h1 style="color:#ff2d75;">❤️ Gửi chị Ánh ❤️</h1>
+
+<p style="margin-top:25px;font-size:22px;line-height:1.8;">
+
+Dù chỉ gặp nhau vào mùa hè năm đó và được đi chơi cùng chị mấy ngày,
+nhưng từ lúc ấy em đã luôn tương tư chị.
+
+Em mong từ hôm nay mình sẽ có cơ hội tìm hiểu nhau nhiều hơn,
+cùng nhau tạo nên thật nhiều kỷ niệm đẹp và viết tiếp câu chuyện của hai đứa.
+
+❤️ Cảm ơn chị đã dành thời gian trả lời những câu hỏi này. ❤️
+
+</p>
+
+`;
+
+}
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
